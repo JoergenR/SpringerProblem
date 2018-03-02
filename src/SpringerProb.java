@@ -5,7 +5,7 @@ public class SpringerProb {
     static int n;
     public static int saveMoves[][];
 
-    static boolean isSafe(int x, int y, int solution[][]) {
+    static boolean canMoveHere(int x, int y, int solution[][]) {
         return (x >= 0 && x < n && y >=0 && y < n && solution[x][y] == -1);
     }
 
@@ -35,7 +35,7 @@ public class SpringerProb {
         saveMoves[0][0] = j;
         saveMoves[0][1] = i;
 
-        if (!solver(i,j,1,solution, X,Y)) {
+        if (!findSolution(i,j,1,solution, X,Y)) {
             System.out.println("Finnes ingen løsning");
             return false;
         }
@@ -45,7 +45,7 @@ public class SpringerProb {
         return true;
     }
 
-    public static boolean solver(int x, int y, int moves, int solution[][], int X[], int Y[]) {
+    public static boolean findSolution(int x, int y, int moves, int solution[][], int X[], int Y[]) {
 
         int x2, y2;
         if (moves == n*n)
@@ -55,9 +55,9 @@ public class SpringerProb {
         for (int s = 0; s < 8; s++){
             x2 = x + X[s];
             y2 = y + Y[s];
-            if (isSafe(x2, y2, solution)) {
+            if (canMoveHere(x2, y2, solution)) {
                 solution[x2][y2] = moves;
-                if (solver(x2, y2, moves +1, solution, X,Y)) {
+                if (findSolution(x2, y2, moves +1, solution, X,Y)) {
                     saveMoves[moves][0] = y2;
                     saveMoves[moves][1] = x2;
                     return true;
